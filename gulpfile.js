@@ -12,6 +12,7 @@ import browser from 'browser-sync';
 import nunjucksRender from 'gulp-nunjucks-render';
 import htmlmin from 'gulp-htmlmin';
 import del from 'del';
+import ghPages from "gh-pages";
 
 
 // Styles
@@ -112,7 +113,7 @@ const clean = () => {
 
 // Server
 
-const server = (done) => {
+export const server = (done) => {
   browser.init({
     server: {
       baseDir: 'build'
@@ -141,6 +142,9 @@ export const build = gulp.series(
     gulp.parallel(styles, views, scripts, svg, sprite, createWebp),
   );
 
+export const deploy = (cb) => {
+  ghPages.publish('./build', cb);
+}
 
 // Default
 
